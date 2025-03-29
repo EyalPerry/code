@@ -1,0 +1,16 @@
+[project]
+name = "data-eng"
+version = "0.1.0"
+description = ""
+authors = [{ name = "Eyal Perry", email = "e.perry.pa@gmail.com" }]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = ["polars (>=1.26.0,<2.0.0)"]
+
+[tool.poetry]
+packages = [{ include = "eyal", from = "src" }]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
