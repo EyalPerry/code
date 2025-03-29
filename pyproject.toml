@@ -5,7 +5,7 @@ description = ""
 authors = [{ name = "Eyal Perry", email = "e.perry.pa@gmail.com" }]
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = ["polars (>=1.26.0,<2.0.0)", "pyspark[sql] (>=3.5.5,<4.0.0)"]
+dependencies = ["polars (>=1.26.0,<2.0.0)", "pyspark[sql] (>=3.5.5,<4.0.0)", "ipykernel (>=6.29.5,<7.0.0)"]
 
 [tool.poetry]
 packages = [{ include = "eyal", from = "src" }]
