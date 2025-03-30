@@ -6,7 +6,7 @@
 # VS Code
 - Install Python Extension
 - Install Jupyter Extention
-- Install Metals Extension (Scala Language Support)
+- Install Metals Extension
 # Python
 - install poetry
 - create venv `python -m venv venv`
