@@ -1,15 +1,20 @@
 [project]
-name = "data-eng"
+name = "data-eng-template"
 version = "0.1.0"
 description = ""
 authors = [{ name = "Eyal Perry", email = "e.perry.pa@gmail.com" }]
 readme = "README.md"
-requires-python = ">=3.12"
-dependencies = ["polars (>=1.26.0,<2.0.0)", "pyspark[sql] (>=3.5.5,<4.0.0)", "ipykernel (>=6.29.5,<7.0.0)", "delta-spark (>=3.3.0,<4.0.0)"]
+requires-python = ">=3.12,<4.0"
+dependencies = ["polars (>=1.26.0,<2.0.0)", "delta-spark (>=3.3.0,<4.0.0)"]
 
 [tool.poetry]
 packages = [{ include = "eyal", from = "src" }]
 
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.29.5"
+testcontainers = "^4.9.2"
+pyspark = { extras = ["sql"], version = "^3.5.5" }
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
