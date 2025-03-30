@@ -17,3 +17,9 @@
 - edit `~/.local/share/jupyter/kernels/scala/kernel.json`
     - Add `--add-opens=java.base/sun.nio.ch=ALL-UNNAMED` after `java` command to fix spark errors
 - You can now select scala interpreter via VS Code Jupyter and run Spark
+
+# Why
+- scure, DevOps managed dev env
+- cut down on dev machine setup
+- use the same tooling and version
+- investigate data, with python or scala + spark + delta - our data stack
