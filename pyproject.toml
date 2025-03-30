@@ -15,6 +15,7 @@ packages = [{ include = "eyal", from = "src" }]
 ipykernel = "^6.29.5"
 testcontainers = "^4.9.2"
 pyspark = { extras = ["sql"], version = "^3.5.5" }
+kafka-python = "^2.1.4"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
