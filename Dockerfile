@@ -4,7 +4,7 @@ FROM ubuntu:24.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install core packages
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt update && apt-get install -y \
     python3 \
     python3-pip \
     python3-venv \
@@ -18,8 +18,8 @@ RUN apt-get update && apt-get install -y \
     ca-certificates \
     bash \
     pipx \
+    && apt install gh \
     && rm -rf /var/lib/apt/lists/*
-
 
 # Add python command symlink
 RUN ln -s /usr/bin/python3 /usr/bin/python
@@ -34,7 +34,6 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 # Install DuckDB
 RUN curl https://install.duckdb.org | sh \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
-
 
 # Install kubectl
 RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \

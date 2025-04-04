@@ -1,10 +1,12 @@
-// .devcontainer/devcontainer.json
+//https://containers.dev/implementors/json_reference/
+//https://containers.dev/features
 {
     "name": "data_eng",
-    "build": {
-        "dockerfile": "Dockerfile",
-        "context": ".."
-    },
+    "image": "data_eng",
+    "forwardPorts": [
+        // Jupyter
+        8888
+    ],
     "customizations": {
         "vscode": {
             "settings": {
@@ -16,10 +18,20 @@
                 "ms-python.python",
                 "ms-toolsai.jupyter",
                 "tamasfe.even-better-toml",
-                "redhat.vscode-yaml",
-                "adamviola.parquet-explorer"
+                "redhat.vscode-yaml"
             ]
         }
     },
-    "remoteUser": "devuser"
+    "mounts": [
+        {
+            "source": "notenooks",
+            "target": "/app/notebooks",
+            "type": "volume"
+        },
+        {
+            "source": "local",
+            "target": "/tmp",
+            "type": "volume"
+        }
+    ]
 }
