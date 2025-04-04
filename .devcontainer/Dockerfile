@@ -20,6 +20,27 @@ RUN apt-get update && apt-get install -y \
     pipx \
     && rm -rf /var/lib/apt/lists/*
 
+
+# Add python command symlink
+RUN ln -s /usr/bin/python3 /usr/bin/python
+
+# Install AWS CLI
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
+    && unzip awscliv2.zip \
+    && ./aws/install \
+    && rm -rf awscliv2.zip aws \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install DuckDB
+RUN curl https://install.duckdb.org | sh \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+
+# Install kubectl
+RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
+    install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 # Install SDKMAN
 RUN curl -s "https://get.sdkman.io" | bash
 
@@ -40,8 +61,10 @@ RUN pipx install poetry
 
 WORKDIR /app
 
+COPY src/ ./src/
+COPY pyproject.toml poetry.lock ./
+
+RUN poetry install
+
 COPY . .
-
-RUN poetry install --with dev
-
-RUN chmod +x /app/entrypoint.sh
+ENTRYPOINT [ "/bin/bash" ]

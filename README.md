@@ -23,3 +23,5 @@
 - cut down on dev machine setup
 - use the same tooling and version
 - investigate data, with python or scala + spark + delta - our data stack
+
+docker build . -f .devcontainer/Dockerfile -t data_eng

@@ -1,9 +1,8 @@
 [project]
 name = "data-eng-template"
 version = "0.1.0"
-description = ""
+description = "data engineering dev container template"
 authors = [{ name = "Eyal Perry", email = "e.perry.pa@gmail.com" }]
-readme = "README.md"
 requires-python = ">=3.12,<4.0"
 dependencies = [
     "polars (>=1.26.0,<2.0.0)",
@@ -12,16 +11,19 @@ dependencies = [
     "pandas (>=2.2.3,<3.0.0)",
     "pyarrow (>=19.0.1,<20.0.0)",
     "setuptools (>=78.1.0,<79.0.0)",
+    "clickhouse-connect (>=0.8.16,<0.9.0)",
+    "psycopg[binary] (>=3.2.6,<4.0.0)",
+    "boto3 (>=1.37.27,<2.0.0)",
+    "jupyter (>=1.1.1,<2.0.0)",
+    "ipykernel (>=6.29.5,<7.0.0)",
+    "testcontainers (>=4.10.0,<5.0.0)",
+    "kafka-python (>=2.1.4,<3.0.0)",
+    "duckdb (>=1.2.1,<2.0.0)",
 ]
 
 [tool.poetry]
 packages = [{ include = "data_eng", from = "src" }]
 
-
-[tool.poetry.group.dev.dependencies]
-ipykernel = "^6.29.5"
-testcontainers = "^4.9.2"
-kafka-python = "^2.1.4"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
