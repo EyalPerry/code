@@ -56,9 +56,10 @@ ENV PATH="/root/.local/bin:$PATH"
 ENV PYTHONPATH="/app/.venv/lib/python3.12/site-packages:/app/src"
 ENV POETRY_VIRTUALENVS_IN_PROJECT=true
 
-RUN pipx install poetry
+RUN pipx install poetry \ 
+    && pipx install jupyter --include-deps
 
-WORKDIR /app
+WORKDIR /container
 
 COPY src/ ./src/
 COPY pyproject.toml poetry.lock ./
@@ -66,4 +67,5 @@ COPY pyproject.toml poetry.lock ./
 RUN poetry install
 
 COPY . .
-ENTRYPOINT [ "/bin/bash" ]
+
+WORKDIR /app

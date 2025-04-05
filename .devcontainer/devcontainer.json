@@ -3,10 +3,6 @@
 {
     "name": "data_eng",
     "image": "data_eng",
-    "forwardPorts": [
-        // Jupyter
-        8888
-    ],
     "customizations": {
         "vscode": {
             "settings": {
@@ -21,17 +17,5 @@
                 "redhat.vscode-yaml"
             ]
         }
-    },
-    "mounts": [
-        {
-            "source": "notenooks",
-            "target": "/app/notebooks",
-            "type": "volume"
-        },
-        {
-            "source": "local",
-            "target": "/tmp",
-            "type": "volume"
-        }
-    ]
+    }
 }
