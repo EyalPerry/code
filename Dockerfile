@@ -18,11 +18,9 @@ RUN apt-get update && apt update && apt-get install -y \
     ca-certificates \
     bash \
     pipx \
+    openjdk-17-jdk \
     && apt install gh \
     && rm -rf /var/lib/apt/lists/*
-
-# Add python command symlink
-RUN ln -s /usr/bin/python3 /usr/bin/python
 
 # Install AWS CLI
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
@@ -40,20 +38,14 @@ RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/s
     install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install SDKMAN
-RUN curl -s "https://get.sdkman.io" | bash
-
-# Install JVM Deps
-RUN bash -c "source /root/.sdkman/bin/sdkman-init.sh && sdk install java 17.0.14-tem && sdk install scala 2.13.16"
-
 # Install Coursier
 RUN curl -fL "https://github.com/coursier/launchers/raw/master/cs-x86_64-pc-linux.gz" | gzip -d > /usr/local/bin/cs && chmod +x /usr/local/bin/cs
 
-# Install Almond (Scala Jupyter Kernel)
-RUN bash -c "cs launch almond --scala 2.13.16 -- --install"
+# Install Scala
+RUN bash -c "cs install scala:2.13.16 && cs install scalac:2.13.16 && cs launch almond --scala 2.13.16 -- --install"
 
 ENV PATH="/root/.local/bin:$PATH"
-ENV PYTHONPATH="/app/.venv/lib/python3.12/site-packages:/app/src"
+ENV PYTHONPATH="/container/.venv/lib/python3.12/site-packages:/container/src"
 ENV POETRY_VIRTUALENVS_IN_PROJECT=true
 
 RUN pipx install poetry \ 

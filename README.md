@@ -12,3 +12,4 @@
 
 # Build
 `docker build . -f Dockerfile -t data_eng`
+`docker run -it data_eng`
