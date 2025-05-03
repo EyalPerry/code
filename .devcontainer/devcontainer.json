@@ -2,7 +2,10 @@
 //https://containers.dev/features
 {
     "name": "data_eng",
-    "image": "data_eng",
+    "build": {
+        "context": "..",
+        "dockerfile": "Dockerfile"
+    },
     "customizations": {
         "vscode": {
             "settings": {
