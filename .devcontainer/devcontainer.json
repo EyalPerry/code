@@ -2,8 +2,13 @@
 //https://containers.dev/features
 {
     "name": "data_eng",
-    "image": "data_eng",
-    "initializeCommand": "docker build . -f .devcontainer/Dockerfile -t data_eng",
+    // "image": "data_eng:latest",
+    "dockerComposeFile": [
+        "docker-compose.yml",
+        "kafka.yml"
+    ],
+    "service": "dev-container",
+    "workspaceFolder": "/container",
     "customizations": {
         "vscode": {
             "settings": {
@@ -16,9 +21,6 @@
                 "ms-toolsai.jupyter",
                 "tamasfe.even-better-toml",
                 "redhat.vscode-yaml",
-                "vscjava.vscode-java-pack",
-                "mindaro.mindaro",
-                "ms-kubernetes-tools.vscode-kubernetes-tools"
             ]
         }
     }

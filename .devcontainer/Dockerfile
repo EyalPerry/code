@@ -10,7 +10,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONPATH="/container/.venv/lib/python3.${PYTHON_MINOR_VERSION}/site-packages:/container/src" \
     POETRY_VIRTUALENVS_IN_PROJECT=true \
     POETRY_CACHE_DIR=/tmp/poetry_cache \
-    CLASSPATH="/container/target/dependency/*"
+    CLASSPATH="/jars/*"
 
 RUN apt-get update \
     && apt-get install -y \
@@ -43,7 +43,7 @@ RUN apt-get update \
 WORKDIR /container
 
 COPY pom.xml ./
-RUN mvn dependency:copy-dependencies -DoutputDirectory=target/dependency
+RUN mvn dependency:copy-dependencies -DoutputDirectory=/jars
 
 COPY pyproject.toml poetry.lock ./
 RUN poetry install --no-root && rm -rf /tmp/* /root/.cache/*
