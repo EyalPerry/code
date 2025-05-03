@@ -23,3 +23,4 @@ def init_spark() -> SparkSession:
 
 if __name__ == "__main__":
     init_spark()
+    a=5

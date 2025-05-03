@@ -1,18 +1,15 @@
 FROM ubuntu:24.04
 
-# Version arguments with current defaults
 ARG JAVA_VERSION=17
 ARG SCALA_VERSION=2.13.16
 
-# avoid interactive apt prompts
-ENV DEBIAN_FRONTEND=noninteractive
-ENV JDK_JAVA_OPTIONS="--add-opens=java.base/sun.nio.ch=ALL-UNNAMED"
+ENV DEBIAN_FRONTEND=noninteractive \
+    JDK_JAVA_OPTIONS="--add-opens=java.base/sun.nio.ch=ALL-UNNAMED" \
+    PATH="/root/.local/bin:$PATH" \
+    PYTHONPATH="/container/.venv/lib/python3.12/site-packages:/container/src" \
+    POETRY_VIRTUALENVS_IN_PROJECT=true \
+    POETRY_CACHE_DIR=/tmp/poetry_cache
 
-ENV PATH="/root/.local/bin:$PATH"
-ENV PYTHONPATH="/container/.venv/lib/python3.12/site-packages:/container/src"
-ENV POETRY_VIRTUALENVS_IN_PROJECT=true
-
-# Install core packages
 RUN apt-get update && apt update && apt-get install -y \
     python3 \
     python3-pip \
@@ -41,15 +38,17 @@ RUN apt-get update && apt update && apt-get install -y \
     && pipx install poetry \ 
     && pipx install jupyter --include-deps \
     && apt-get clean && rm -rf /var/lib/apt/lists/* \
-    && rm -rf /var/lib/apt/lists/* 
+    && rm -rf /var/lib/apt/lists/* /tmp/* /root/.cache/pip /root/.cache/pypoetry /tmp/poetry_cache
+
 
 WORKDIR /container
 
-COPY src/ ./src/
 COPY pyproject.toml poetry.lock ./
 
-RUN poetry install
+RUN poetry install --no-root && rm -rf ${POETRY_CACHE_DIR}
 
 COPY . .
+
+RUN poetry install && rm -rf ${POETRY_CACHE_DIR}
 
 CMD [ "bash" ]

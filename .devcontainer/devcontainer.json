@@ -2,9 +2,10 @@
 //https://containers.dev/features
 {
     "name": "data_eng",
-    "dockerComposeFile": "docker-compose.yml",
-    "service": "devcontainer",
-    "workspaceFolder": "/container",
+    "image": "data_eng",
+    // "dockerComposeFile": "docker-compose.yml",
+    // "service": "devcontainer",
+    // "workspaceFolder": "/container",
     "customizations": {
         "vscode": {
             "settings": {
