@@ -2,10 +2,9 @@
 //https://containers.dev/features
 {
     "name": "data_eng",
-    "build": {
-        "context": "..",
-        "dockerfile": "Dockerfile"
-    },
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "devcontainer",
+    "workspaceFolder": "/container",
     "customizations": {
         "vscode": {
             "settings": {

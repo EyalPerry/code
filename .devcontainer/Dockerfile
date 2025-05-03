@@ -52,6 +52,4 @@ RUN poetry install
 
 COPY . .
 
-# COPY kernel.json /root/.local/share/jupyter/kernels/scala/kernel.json
-
-WORKDIR /app
+CMD [ "bash" ]
