@@ -1,17 +1,19 @@
 FROM ubuntu:24.04
 
-ARG JAVA_VERSION=17
+ARG PYTHON_MINOR_VERSION=13
+ARG JDK_MAJOR_VERSION=21
 ARG SCALA_VERSION=2.13.16
 
 ENV DEBIAN_FRONTEND=noninteractive \
     JDK_JAVA_OPTIONS="--add-opens=java.base/sun.nio.ch=ALL-UNNAMED" \
     PATH="/root/.local/bin:$PATH" \
-    PYTHONPATH="/container/.venv/lib/python3.12/site-packages:/container/src" \
+    PYTHONPATH="/container/.venv/lib/python3.${PYTHON_MINOR_VERSION}/site-packages:/container/src" \
     POETRY_VIRTUALENVS_IN_PROJECT=true \
     POETRY_CACHE_DIR=/tmp/poetry_cache
 
-RUN apt-get update && apt update && apt-get install -y \
-    python3 \
+RUN apt-get update \
+    && apt-get install -y \
+    software-properties-common \
     curl \
     unzip \
     zip \
@@ -19,7 +21,9 @@ RUN apt-get update && apt update && apt-get install -y \
     gzip \
     bash \
     pipx \
-    openjdk-${JAVA_VERSION}-jdk \
+    openjdk-${JDK_MAJOR_VERSION}-jdk \
+    && add-apt-repository ppa:deadsnakes/ppa \
+    && apt-get install -y python3.${PYTHON_MINOR_VERSION} \
     && apt install gh \
     && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
     && unzip awscliv2.zip \
@@ -32,17 +36,17 @@ RUN apt-get update && apt update && apt-get install -y \
     && bash -c "cs install scala:${SCALA_VERSION} && cs install scalac:${SCALA_VERSION} && cs launch almond --scala ${SCALA_VERSION} -- --install" \
     && pipx install poetry \ 
     && pipx install jupyter --include-deps \
-    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* 
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /root/.cache/*
 
 
 WORKDIR /container
 
 COPY pyproject.toml poetry.lock ./
 
-RUN poetry install --no-root && rm -rf ${POETRY_CACHE_DIR} /root/.cache/pip /root/.cache/pypoetry
+RUN poetry install --no-root && rm -rf /tmp/* /root/.cache/*
 
 COPY . .
 
-RUN poetry install && rm -rf ${POETRY_CACHE_DIR} /root/.cache/pip /root/.cache/pypoetry
+RUN poetry install && rm -rf /tmp/* /root/.cache/*
 
 CMD [ "bash" ]
