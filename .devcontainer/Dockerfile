@@ -12,16 +12,11 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 RUN apt-get update && apt update && apt-get install -y \
     python3 \
-    python3-pip \
-    python3-venv \
-    python3-dev \
-    build-essential \
     curl \
     unzip \
     zip \
     git \
     gzip \
-    ca-certificates \
     bash \
     pipx \
     openjdk-${JAVA_VERSION}-jdk \
@@ -37,18 +32,17 @@ RUN apt-get update && apt update && apt-get install -y \
     && bash -c "cs install scala:${SCALA_VERSION} && cs install scalac:${SCALA_VERSION} && cs launch almond --scala ${SCALA_VERSION} -- --install" \
     && pipx install poetry \ 
     && pipx install jupyter --include-deps \
-    && apt-get clean && rm -rf /var/lib/apt/lists/* \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /root/.cache/pip /root/.cache/pypoetry /tmp/poetry_cache
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* 
 
 
 WORKDIR /container
 
 COPY pyproject.toml poetry.lock ./
 
-RUN poetry install --no-root && rm -rf ${POETRY_CACHE_DIR}
+RUN poetry install --no-root && rm -rf ${POETRY_CACHE_DIR} /root/.cache/pip /root/.cache/pypoetry
 
 COPY . .
 
-RUN poetry install && rm -rf ${POETRY_CACHE_DIR}
+RUN poetry install && rm -rf ${POETRY_CACHE_DIR} /root/.cache/pip /root/.cache/pypoetry
 
 CMD [ "bash" ]
