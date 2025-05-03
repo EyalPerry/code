@@ -9,7 +9,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
     PATH="/root/.local/bin:$PATH" \
     PYTHONPATH="/container/.venv/lib/python3.${PYTHON_MINOR_VERSION}/site-packages:/container/src" \
     POETRY_VIRTUALENVS_IN_PROJECT=true \
-    POETRY_CACHE_DIR=/tmp/poetry_cache
+    POETRY_CACHE_DIR=/tmp/poetry_cache \
+    CLASSPATH="/container/target/dependency/*"
 
 RUN apt-get update \
     && apt-get install -y \
@@ -22,6 +23,7 @@ RUN apt-get update \
     bash \
     pipx \
     openjdk-${JDK_MAJOR_VERSION}-jdk \
+    maven \
     && add-apt-repository ppa:deadsnakes/ppa \
     && apt-get install -y python3.${PYTHON_MINOR_VERSION} \
     && apt install gh \
@@ -38,11 +40,12 @@ RUN apt-get update \
     && pipx install jupyter --include-deps \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /root/.cache/*
 
-
 WORKDIR /container
 
-COPY pyproject.toml poetry.lock ./
+COPY pom.xml ./
+RUN mvn dependency:copy-dependencies -DoutputDirectory=target/dependency
 
+COPY pyproject.toml poetry.lock ./
 RUN poetry install --no-root && rm -rf /tmp/* /root/.cache/*
 
 COPY . .

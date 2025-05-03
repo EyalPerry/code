@@ -15,7 +15,10 @@
                 "ms-python.python",
                 "ms-toolsai.jupyter",
                 "tamasfe.even-better-toml",
-                "redhat.vscode-yaml"
+                "redhat.vscode-yaml",
+                "vscjava.vscode-java-pack",
+                "mindaro.mindaro",
+                "ms-kubernetes-tools.vscode-kubernetes-tools"
             ]
         }
     }
