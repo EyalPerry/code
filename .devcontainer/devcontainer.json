@@ -3,9 +3,7 @@
 {
     "name": "data_eng",
     "image": "data_eng",
-    // "dockerComposeFile": "docker-compose.yml",
-    // "service": "devcontainer",
-    // "workspaceFolder": "/container",
+    "initializeCommand": "docker build . -f .devcontainer/Dockerfile -t data_eng",
     "customizations": {
         "vscode": {
             "settings": {
