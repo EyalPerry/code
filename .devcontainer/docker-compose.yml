@@ -1,0 +1,16 @@
+services:
+  dev-container:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+      tags:
+        - data_eng:latest
+    container_name: dev-container
+    ports:
+      - "8888:8888"
+    volumes:
+      - ..:/container
+    depends_on:
+      - kafka
+    command: sleep infinity
+    stop_grace_period: 0s

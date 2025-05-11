@@ -1,0 +1,27 @@
+//https://containers.dev/implementors/json_reference/
+//https://containers.dev/features
+{
+    "name": "data_eng",
+    // "image": "data_eng:latest",
+    "dockerComposeFile": [
+        "docker-compose.yml",
+        "kafka.yml"
+    ],
+    "service": "dev-container",
+    "workspaceFolder": "/container",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash"
+            },
+            "extensions": [
+                "scala-lang.scala",
+                "scalameta.metals",
+                "ms-python.python",
+                "ms-toolsai.jupyter",
+                "tamasfe.even-better-toml",
+                "redhat.vscode-yaml",
+            ]
+        }
+    }
+}
